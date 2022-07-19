@@ -1,0 +1,14 @@
+<resources>
+    <string-array name="theme_entries">
+        <item>Automatic</item>
+        <item>Dark Mode</item>
+        <item>Light Mode</item>
+    </string-array>
+
+    <string-array name="theme_values">
+        <item>@string/pref_value_light</item>
+        <item>@string/pref_value_dark</item>
+        <item>@string/pref_value_auto</item>
+    </string-array>
+
+</resources>

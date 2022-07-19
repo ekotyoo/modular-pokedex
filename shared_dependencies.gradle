@@ -1,0 +1,25 @@
+dependencies {
+    // coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
+
+    // hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    // glide
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+
+    // navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // default
+    implementation "androidx.core:core-ktx:$core_ktx_version"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "com.google.android.material:material:$material_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+    testImplementation "junit:junit:$junit_version"
+    androidTestImplementation "androidx.test.ext:junit:$junit_androidx_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
+}

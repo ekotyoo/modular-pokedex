@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/src/android-project/pokedex/app/src/main/res/drawable/ic_bookmark.xml" value="0.2035" />
+        <entry key="..\:/src/android-project/pokedex/app/src/main/res/drawable/ic_bookmark_border.xml" value="0.2035" />
+        <entry key="..\:/src/android-project/pokedex/app/src/main/res/drawable/ic_collections_bookmark.xml" value="0.2035" />
+        <entry key="..\:/src/android-project/pokedex/app/src/main/res/drawable/ic_dark_mode.xml" value="0.2035" />
+        <entry key="..\:/src/android-project/pokedex/app/src/main/res/drawable/ic_settings.xml" value="0.2035" />
+        <entry key="..\:/src/android-project/pokedex/app/src/main/res/font-v26/albertsans.xml" value="0.3768518518518518" />
+        <entry key="..\:/src/android-project/pokedex/app/src/main/res/font/albertsans.xml" value="0.3255411255411255" />
+        <entry key="..\:/src/android-project/pokedex/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/src/android-project/pokedex/app/src/main/res/layout/fragment_pokemon.xml" value="0.3625" />
+        <entry key="..\:/src/android-project/pokedex/app/src/main/res/layout/fragment_pokemon_detail.xml" value="0.25" />
+        <entry key="..\:/src/android-project/pokedex/app/src/main/res/layout/fragment_pokemon_list.xml" value="0.3484375" />
+        <entry key="..\:/src/android-project/pokedex/app/src/main/res/layout/pokemon_list_item.xml" value="0.33" />
+        <entry key="..\:/src/android-project/pokedex/app/src/main/res/menu-v26/menu.xml" value="0.3625" />
+        <entry key="..\:/src/android-project/pokedex/app/src/main/res/menu/detail_menu.xml" value="0.30526315789473685" />
+        <entry key="..\:/src/android-project/pokedex/app/src/main/res/menu/menu.xml" value="0.30526315789473685" />
+        <entry key="..\:/src/android-project/pokedex/app/src/main/res/xml/root_preferences.xml" value="0.30526315789473685" />
+        <entry key="..\:/src/android-project/pokedex/core/src/main/res/layout/pokemon_list_item.xml" value="0.30526315789473685" />
+        <entry key="..\:/src/android-project/pokedex/feature_favorite/src/main/res/layout/fragment_favorite.xml" value="0.30526315789473685" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

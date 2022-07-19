@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ThemeOverlay.Pokedex.ActionBar" parent="@style/ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="android:background">?attr/colorSurface</item>
+        <item name="iconTint">?attr/colorOnSurface</item>
+        <item name="elevation">0dp</item>
+    </style>
+</resources>
