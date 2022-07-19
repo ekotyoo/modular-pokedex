@@ -11,6 +11,8 @@ class PokemonLocalDataSource @Inject constructor(
 
     fun getPokemons() = pokemonDao.getAllPokemons()
 
+    fun getRandomPokemon() = pokemonDao.getRandomPokemon()
+
     fun getFavoritePokemons() = pokemonDao.getFavoritePokemons()
 
     fun getPokemonDetail(name: String) = pokemonDao.getPokemonDetail(name)

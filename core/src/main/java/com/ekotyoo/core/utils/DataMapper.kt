@@ -21,6 +21,10 @@ object DataMapper {
         }
     }
 
+    fun mapPokemonEntityToDomain(pokemonEntity: PokemonEntity): Pokemon {
+        return Pokemon(pokemonEntity.name, pokemonEntity.url, pokemonEntity.isFavorite)
+    }
+
     fun mapPokemonDetailResponseToEntity(pokemonDetailResponse: PokemonDetailResponse): PokemonDetailEntity {
         return PokemonDetailEntity(
             id = pokemonDetailResponse.id,

@@ -48,6 +48,14 @@ class PokemonRepository @Inject constructor(
         }
     }
 
+    override fun getRandomPokemon(): Flow<Pokemon?> =
+        pokemonLocalDataSource.getRandomPokemon()
+            .map {
+                return@map it?.let { pokemon ->
+                    return@let DataMapper.mapPokemonEntityToDomain(pokemon)
+                }
+            }
+
     override fun getPokemonDetail(name: String): Flow<Resource<PokemonDetail?>> = flow {
         emit(Resource.Loading())
         if (pokemonLocalDataSource.getPokemonDetail(name).first() == null) {

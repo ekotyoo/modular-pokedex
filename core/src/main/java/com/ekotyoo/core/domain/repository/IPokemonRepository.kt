@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface IPokemonRepository {
     fun getPokemons(): Flow<Resource<List<Pokemon>>>
+    fun getRandomPokemon(): Flow<Pokemon?>
     fun getPokemonDetail(name: String): Flow<Resource<PokemonDetail?>>
     fun getFavoritePokemons(): Flow<List<Pokemon>>
     suspend fun updatePokemonFavorite(pokemonDetail: PokemonDetail, isFavorite: Boolean)
