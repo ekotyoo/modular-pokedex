@@ -63,7 +63,7 @@ class FavoriteFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        (requireActivity() as MainActivity).supportActionBar?.title = getString(com.ekotyoo.pokedex.R.string.app_name)
+        (requireActivity() as MainActivity).supportActionBar?.title = getString(com.ekotyoo.core.R.string.app_name)
     }
 
     override fun onDestroyView() {

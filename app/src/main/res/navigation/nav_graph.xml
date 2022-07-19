@@ -9,7 +9,7 @@
         android:id="@+id/pokemonFragment"
         android:name="com.ekotyoo.pokedex.home.PokemonListFragment"
         android:label="fragment_pokemon_list"
-        tools:layout="@layout/fragment_pokemon_list" >
+        tools:layout="@layout/fragment_pokemon_list">
         <action
             android:id="@+id/action_pokemonFragment_to_pokemonDetailFragment"
             app:destination="@id/pokemonDetailFragment"
@@ -23,7 +23,8 @@
             app:destination="@id/settingsFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim" />
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_pokemonFragment_to_favoriteFragment"
             app:destination="@id/favoriteFragment"
@@ -36,15 +37,16 @@
         android:id="@+id/pokemonDetailFragment"
         android:name="com.ekotyoo.pokedex.detail.PokemonDetailFragment"
         android:label="fragment_pokemon_detail"
-        tools:layout="@layout/fragment_pokemon_detail" >
+        tools:layout="@layout/fragment_pokemon_detail">
         <argument
             android:name="name"
             app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.ekotyoo.pokedex.settings.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:name="com.ekotyoo.feature_setting.SettingsFragment"
+        android:label="SettingsFragment"
+        app:moduleName="feature_setting" />
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.ekotyoo.feature_favorite.FavoriteFragment"

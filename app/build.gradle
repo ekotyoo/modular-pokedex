@@ -44,6 +44,5 @@ dependencies {
     implementation project(':core')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'androidx.preference:preference:1.2.0'
     api 'androidx.navigation:navigation-dynamic-features-fragment:2.5.0'
 }
