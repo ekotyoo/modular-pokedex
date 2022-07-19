@@ -8,6 +8,7 @@ import com.ekotyoo.core.domain.model.Pokemon
 import com.ekotyoo.core.domain.model.PokemonDetail
 import com.ekotyoo.core.domain.repository.IPokemonRepository
 import com.ekotyoo.core.utils.DataMapper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -38,7 +39,7 @@ class PokemonRepository @Inject constructor(
                 emit(Resource.Error(response.errorMessage))
             }
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
     override fun getPokemonDetail(name: String): Flow<Resource<PokemonDetail?>> = flow {
         emit(Resource.Loading())
@@ -69,12 +70,12 @@ class PokemonRepository @Inject constructor(
                 emit(Resource.Error(response.errorMessage))
             }
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
     override fun getFavoritePokemons(): Flow<List<Pokemon>> {
         return pokemonLocalDataSource.getFavoritePokemons().map {
             DataMapper.mapPokemonEntitiesToDomains(it)
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     override suspend fun updatePokemonFavorite(pokemonDetail: PokemonDetail, isFavorite: Boolean) {
