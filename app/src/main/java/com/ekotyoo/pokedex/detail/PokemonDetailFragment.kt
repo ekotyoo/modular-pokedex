@@ -51,9 +51,11 @@ class PokemonDetailFragment : Fragment() {
                 }
                 is Resource.Loading -> {
                     binding.loadingIndicator.visibility = View.VISIBLE
+                    binding.ibFavorite.visibility = View.INVISIBLE
                 }
                 is Resource.Success -> {
                     binding.loadingIndicator.visibility = View.INVISIBLE
+                    binding.ibFavorite.visibility = View.VISIBLE
                     it.data?.let { data ->
                         Glide.with(requireContext()).load(data.imageUrl).into(binding.ivPokemon)
                         binding.apply {
