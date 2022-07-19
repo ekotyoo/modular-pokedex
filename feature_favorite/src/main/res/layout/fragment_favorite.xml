@@ -20,4 +20,17 @@
         app:spanCount="2"
         tools:context=".home.PokemonListFragment"
         tools:listitem="@layout/pokemon_list_item" />
+
+        <TextView
+            android:id="@+id/tv_empty_state"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            tools:text="You don't have any\nfavorite pokemon yet."
+            android:text="@string/empty_favorite_message"
+            android:textStyle="bold"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            app:drawableTopCompat="@drawable/ic_error_outline" />
 </FrameLayout>
