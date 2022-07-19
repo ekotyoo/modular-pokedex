@@ -1,17 +1,16 @@
 package com.ekotyoo.core.data.repository
 
-import com.ekotyoo.core.data.NetworkBoundResource
 import com.ekotyoo.core.data.Resource
 import com.ekotyoo.core.data.source.local.PokemonLocalDataSource
 import com.ekotyoo.core.data.source.remote.PokemonRemoteDataSource
 import com.ekotyoo.core.data.source.remote.network.ApiResponse
-import com.ekotyoo.core.data.source.remote.response.PokemonDetailResponse
-import com.ekotyoo.core.data.source.remote.response.PokemonListItem
 import com.ekotyoo.core.domain.model.Pokemon
 import com.ekotyoo.core.domain.model.PokemonDetail
 import com.ekotyoo.core.domain.repository.IPokemonRepository
 import com.ekotyoo.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -21,55 +20,53 @@ class PokemonRepository @Inject constructor(
     private val pokemonRemoteDataSource: PokemonRemoteDataSource,
     private val pokemonLocalDataSource: PokemonLocalDataSource,
 ) : IPokemonRepository {
-    override fun getPokemons(): Flow<Resource<List<Pokemon>>> =
-        object : NetworkBoundResource<List<Pokemon>, List<PokemonListItem>>() {
-            override fun loadFromDB(): Flow<List<Pokemon>> {
-                return pokemonLocalDataSource.getPokemons().map {
-                    DataMapper.mapPokemonEntitiesToDomains(it)
+    override fun getPokemons(): Flow<Resource<List<Pokemon>>> = flow {
+        emit(Resource.Loading())
+        when (val response = pokemonRemoteDataSource.getPokemons().first()) {
+            is ApiResponse.Success -> {
+                pokemonLocalDataSource.insertPokemons(DataMapper.mapResponsesToPokemonEntities(
+                    response.data))
+                val pokemons =
+                    DataMapper.mapPokemonEntitiesToDomains(pokemonLocalDataSource.getPokemons()
+                        .first())
+                emit(Resource.Success(pokemons))
+            }
+            is ApiResponse.Empty -> {
+                val pokemons =
+                    DataMapper.mapPokemonEntitiesToDomains(pokemonLocalDataSource.getPokemons()
+                        .first())
+                emit(Resource.Success(pokemons))
+            }
+            is ApiResponse.Error -> {
+                emit(Resource.Error(response.errorMessage))
+            }
+        }
+    }
+
+    override fun getPokemonDetail(name: String): Flow<Resource<PokemonDetail?>> = flow {
+        emit(Resource.Loading())
+        val pokemon = pokemonLocalDataSource.getPokemonDetail(name).first()
+        if (pokemon != null) {
+            emit(Resource.Success(DataMapper.mapPokemonDetailEntityToDomain(pokemon)))
+        } else {
+            when (val response = pokemonRemoteDataSource.getPokemonDetail(name).first()) {
+                is ApiResponse.Success -> {
+                    pokemonLocalDataSource.insertPokemonDetail(DataMapper.mapPokemonDetailResponseToEntity(
+                        response.data))
+                    val pokemonData = pokemonLocalDataSource.getPokemonDetail(name).first()
+                        ?.let { DataMapper.mapPokemonDetailEntityToDomain(it) }
+                    emit(Resource.Success(pokemonData))
+                }
+                is ApiResponse.Empty -> {
+                    val pokemonData = pokemonLocalDataSource.getPokemonDetail(name).first()
+                        ?.let { DataMapper.mapPokemonDetailEntityToDomain(it) }
+                    emit(Resource.Success(pokemonData))
+                }
+                is ApiResponse.Error -> {
+                    emit(Resource.Error(response.errorMessage))
                 }
             }
-
-            override fun shouldFetch(data: List<Pokemon>?): Boolean {
-                return data.isNullOrEmpty()
-            }
-
-            override suspend fun createCall(): Flow<ApiResponse<List<PokemonListItem>>> {
-                return pokemonRemoteDataSource.getPokemons()
-            }
-
-            override suspend fun saveCallResult(data: List<PokemonListItem>) {
-                pokemonLocalDataSource.insertPokemons(DataMapper.mapResponsesToPokemonEntities(data))
-            }
-
-        }.asFlow()
-
-    override fun getPokemonDetail(name: String): Flow<Resource<PokemonDetail?>> {
-        return object : NetworkBoundResource<PokemonDetail?, PokemonDetailResponse>() {
-            override fun loadFromDB(): Flow<PokemonDetail?> {
-                return pokemonLocalDataSource.getPokemonDetail(name).map {
-                    if (it != null) {
-                        DataMapper.mapPokemonDetailEntityToDomain(it)
-                    } else {
-                        null
-                    }
-                }
-            }
-
-            override fun shouldFetch(data: PokemonDetail?): Boolean {
-                return data == null
-            }
-
-            override suspend fun createCall(): Flow<ApiResponse<PokemonDetailResponse>> {
-                return pokemonRemoteDataSource.getPokemonDetail(name)
-            }
-
-            override suspend fun saveCallResult(data: PokemonDetailResponse) {
-                pokemonLocalDataSource
-                    .insertPokemonDetail(
-                        DataMapper.mapPokemonDetailResponseToEntity(data)
-                    )
-            }
-        }.asFlow()
+        }
     }
 
     override fun getFavoritePokemons(): Flow<List<Pokemon>> {
