@@ -29,7 +29,7 @@ class PokemonRemoteDataSource @Inject constructor(
                     emit(ApiResponse.Empty)
                 }
             } else {
-                emit(ApiResponse.Error("Something went wrong."))
+                emit(ApiResponse.Error(response.message()))
             }
         }.catch {
             emit(ApiResponse.Error("Something went wrong."))
@@ -43,7 +43,7 @@ class PokemonRemoteDataSource @Inject constructor(
             if (response.isSuccessful && body != null) {
                 emit(ApiResponse.Success(body))
             } else {
-                emit(ApiResponse.Empty)
+                emit(ApiResponse.Error(response.message()))
             }
         }.catch {
             emit(ApiResponse.Error("Something went wrong."))
