@@ -32,7 +32,7 @@ interface PokemonDao {
     @Query("SELECT * FROM pokemon_detail WHERE name = :name")
     fun getPokemonDetail(name: String): Flow<PokemonDetailEntity?>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertPokemonDetail(pokemonDetailEntity: PokemonDetailEntity)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)

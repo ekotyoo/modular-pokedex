@@ -8,10 +8,7 @@ import com.ekotyoo.core.domain.model.Pokemon
 import com.ekotyoo.core.domain.model.PokemonDetail
 import com.ekotyoo.core.domain.repository.IPokemonRepository
 import com.ekotyoo.core.utils.DataMapper
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -45,26 +42,31 @@ class PokemonRepository @Inject constructor(
 
     override fun getPokemonDetail(name: String): Flow<Resource<PokemonDetail?>> = flow {
         emit(Resource.Loading())
-        val pokemon = pokemonLocalDataSource.getPokemonDetail(name).first()
-        if (pokemon != null) {
-            emit(Resource.Success(DataMapper.mapPokemonDetailEntityToDomain(pokemon)))
-        } else {
-            when (val response = pokemonRemoteDataSource.getPokemonDetail(name).first()) {
-                is ApiResponse.Success -> {
-                    pokemonLocalDataSource.insertPokemonDetail(DataMapper.mapPokemonDetailResponseToEntity(
-                        response.data))
-                    val pokemonData = pokemonLocalDataSource.getPokemonDetail(name).first()
-                        ?.let { DataMapper.mapPokemonDetailEntityToDomain(it) }
-                    emit(Resource.Success(pokemonData))
-                }
-                is ApiResponse.Empty -> {
-                    val pokemonData = pokemonLocalDataSource.getPokemonDetail(name).first()
-                        ?.let { DataMapper.mapPokemonDetailEntityToDomain(it) }
-                    emit(Resource.Success(pokemonData))
-                }
-                is ApiResponse.Error -> {
-                    emit(Resource.Error(response.errorMessage))
-                }
+
+        when (val response = pokemonRemoteDataSource.getPokemonDetail(name).first()) {
+            is ApiResponse.Success -> {
+                pokemonLocalDataSource.insertPokemonDetail(
+                    DataMapper.mapPokemonDetailResponseToEntity(response.data)
+                )
+                emitAll(
+                    pokemonLocalDataSource.getPokemonDetail(name).map {
+                        Resource.Success(it?.let { pokemonDetail ->
+                            DataMapper.mapPokemonDetailEntityToDomain(pokemonDetail)
+                        })
+                    }
+                )
+            }
+            is ApiResponse.Empty -> {
+                emitAll(
+                    pokemonLocalDataSource.getPokemonDetail(name).map {
+                        Resource.Success(it?.let { pokemonDetail ->
+                            DataMapper.mapPokemonDetailEntityToDomain(pokemonDetail)
+                        })
+                    }
+                )
+            }
+            is ApiResponse.Error -> {
+                emit(Resource.Error(response.errorMessage))
             }
         }
     }
