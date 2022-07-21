@@ -44,6 +44,7 @@ class PokemonListFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.rvPokemon.adapter = null
         _binding = null
     }
 
