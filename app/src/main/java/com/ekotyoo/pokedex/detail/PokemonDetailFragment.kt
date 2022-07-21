@@ -66,10 +66,15 @@ class PokemonDetailFragment : Fragment() {
                             tvStat1.text = data.stats[0].name.replaceFirstChar { c -> c.uppercaseChar() }
                             tvStat2.text = data.stats[1].name.replaceFirstChar { c -> c.uppercaseChar() }
                             tvStat3.text = data.stats[2].name.replaceFirstChar { c -> c.uppercaseChar() }
-                            tvWeight.text = getString(R.string.weight, data.weight)
-                            tvHeight.text = getString(R.string.height, data.height)
-                            tvBaseExperience.text =
-                                getString(R.string.base_experience, data.baseExperience)
+
+                            val weight: Int = data.weight
+                            val height: Int = data.height
+                            val baseExperience: Int = data.baseExperience
+
+                            tvWeight.text = getString(R.string.weight,  weight)
+                            tvHeight.text = getString(R.string.height, height)
+                            tvBaseExperience.text = getString(R.string.base_experience, baseExperience)
+
                             data.sprites.forEach { spriteUrl ->
                                 val iv = ImageView(requireContext()).apply {
                                     minimumHeight = 300
