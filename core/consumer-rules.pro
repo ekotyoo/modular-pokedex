@@ -80,6 +80,10 @@ public *;
     <init>(...);
 }
 
+-keep class * extends androidx.work.CoroutineWorker {
+    <init>(...);
+}
+
 -keep class * extends androidx.lifecycle.ViewModel {
     <init>();
 }
