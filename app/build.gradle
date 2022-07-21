@@ -32,6 +32,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    lintOptions {
+        disable 'RestrictedApi'
+    }
     dynamicFeatures = [':feature_favorite', ':feature_setting']
     buildFeatures {
         viewBinding true
